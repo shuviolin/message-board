@@ -1,10 +1,24 @@
 class MessagesController < ApplicationController
   def index
-    @test = "bbb"
-    #render 'test.html.erb'
+    @message = Message.new
   end
-  
-  def test
-    @test = "aaa"
+
+  def create
+    @message = Message.new(message_params)
+    @message.save
+    redirect_to root_path , notice: 'メッセージを保存しました'
   end
+
+  private
+  def message_params
+    params.require(:message).permit(:name, :body)
+  end
+  ## ここまで
 end
+  class MessagesController < ApplicationController
+  def index
+    @message = Message.new
+    # Messageを全て取得する。
+    @messages = Message.all
+  end
+  end
